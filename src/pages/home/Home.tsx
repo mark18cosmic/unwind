@@ -1,63 +1,116 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import GuesthouseCard from "@/components/guesthouse/GuesthouseCard";
+import { AuthContext } from "@/auth/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Waves } from "lucide-react";
-import { AuthContext } from "@/auth/AuthContext";
-import GuesthouseCard from "@/components/guesthouse/GuesthouseCard";
-import { signOut } from "firebase/auth";
-import { auth } from "@/services/firebase";
+import { collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { db } from "@/services/firebase";
 
-// Dummy guesthouse data
-const guesthouses = [
-  {
-    id: "1",
-    name: "Ocean Breeze Guesthouse",
-    location: "Maafushi",
-    price: 120,
-    image: "https://source.unsplash.com/400x300/?beach,hotel",
-  },
-  {
-    id: "2",
-    name: "Sunny Stay",
-    location: "Maafushi",
-    price: 95,
-    image: "https://source.unsplash.com/400x300/?resort,hotel",
-  },
-  {
-    id: "3",
-    name: "Lagoon View Guesthouse",
-    location: "Maafushi",
-    price: 150,
-    image: "https://source.unsplash.com/400x300/?lagoon,hotel",
-  },
-];
+interface Guesthouse {
+  id?: string;
+  name: string;
+  island: string;
+  image: string;
+  rating: number;
+  pricePerNight: number;
+  amenities: string[];
+  offpeakDiscount?: number;
+  ownerId: string;
+  createdAt: Date;
+}
 
 const Home = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [guesthouses, setGuesthouses] = useState<Guesthouse[]>([]);
 
-  const handleLogout = async () => {
+  // Dummy guesthouse data
+  const dummyGuesthouses: Guesthouse[] = [
+    {
+      name: "Ocean Breeze Guesthouse",
+      island: "Maafushi",
+      image: "https://source.unsplash.com/400x300/?beach,hotel",
+      rating: 4.5,
+      pricePerNight: 120,
+      amenities: ["Beach Access", "WiFi", "Restaurant"],
+      offpeakDiscount: 15,
+      ownerId: user?.uid || "guesthouse_1",
+      createdAt: new Date(),
+    },
+    {
+      name: "Sunny Stay",
+      island: "Maafushi",
+      image: "https://source.unsplash.com/400x300/?resort,hotel",
+      rating: 4.2,
+      pricePerNight: 95,
+      amenities: ["WiFi", "Restaurant"],
+      offpeakDiscount: 10,
+      ownerId: user?.uid || "guesthouse_2",
+      createdAt: new Date(),
+    },
+    {
+      name: "Lagoon View Guesthouse",
+      island: "Maafushi",
+      image: "https://source.unsplash.com/400x300/?lagoon,hotel",
+      rating: 4.7,
+      pricePerNight: 150,
+      amenities: ["Beach Access", "WiFi"],
+      offpeakDiscount: 20,
+      ownerId: user?.uid || "guesthouse_3",
+      createdAt: new Date(),
+    },
+  ];
+
+  // Fetch guesthouses from Firestore and seed if empty
+  const fetchGuesthouses = async () => {
     try {
-      await signOut(auth);
-      setDropdownOpen(false);
-      navigate("/login");
+      const guesthouseCol = collection(db, "guesthouses");
+      const snapshot = await getDocs(guesthouseCol);
+
+      if (snapshot.empty) {
+        console.log("No guesthouses found. Seeding dummy data...");
+        for (const gh of dummyGuesthouses) {
+          await addDoc(guesthouseCol, gh);
+        }
+      }
+
+      const allDocs = await getDocs(guesthouseCol);
+      const allGuesthouses = allDocs.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as Guesthouse[];
+      setGuesthouses(allGuesthouses);
     } catch (err) {
-      console.error("Logout failed:", err);
+      console.error("Error fetching guesthouses:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchGuesthouses();
+  }, [user]);
+
+  // Delete guesthouse
+  const handleDelete = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this listing?")) return;
+    try {
+      await deleteDoc(doc(db, "guesthouses", id));
+      setGuesthouses((prev) => prev.filter((gh) => gh.id !== id));
+    } catch (err) {
+      console.error("Failed to delete listing:", err);
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Simplified Navbar */}
+      {/* Navbar */}
       <nav className="flex items-center justify-between p-4 bg-white shadow-md">
         <Link to="/" className="flex items-center gap-2">
         <img src="/src/assets/Unwind.png" alt="logo" className="w-10 h-10" />
-
-          <span className="font-bold text-lg">Unwind</span>
+          <span className="hidden md:block font-bold text-lg">Unwind</span>
         </Link>
 
-        <div className="hidden md:flex items-center gap-3 relative">
+        <div className="flex items-center gap-3">
           {!user ? (
             <>
               <Link to="/login">
@@ -70,60 +123,39 @@ const Home = () => {
               </Link>
             </>
           ) : (
-            <div className="relative">
-              {/* Clickable username + PFP */}
-              <div
-                className="flex items-center gap-2 cursor-pointer select-none"
-                onClick={() => setDropdownOpen((prev) => !prev)}
-              >
-                <span className="font-medium text-sm">Welcome, {user.username}</span>
-                <img
-                  src={user.photoURL || "https://i.pravatar.cc/40"}
-                  alt="Profile"
-                  className="w-8 h-8 rounded-full"
-                />
-              </div>
-
-              {/* Dropdown */}
-              {dropdownOpen && (
-                <div className="absolute right-0 mt-2 w-44 bg-white border rounded shadow-lg flex flex-col z-50">
-                  <button
-                    onClick={() => {
-                      navigate("/dashboard");
-                      setDropdownOpen(false);
-                    }}
-                    className="px-4 py-2 text-sm hover:bg-gray-100 text-left"
-                  >
-                    Dashboard
-                  </button>
-                  <button
-                    onClick={handleLogout}
-                    className="px-4 py-2 text-sm text-red-500 hover:bg-red-100 text-left"
-                  >
-                    Logout
-                  </button>
-                </div>
-              )}
-            </div>
+            <span className="font-medium text-sm">
+              Welcome, {user.username}
+            </span>
           )}
         </div>
       </nav>
 
       {/* Main content */}
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold mb-6">Guesthouse Listings</h1>
+        <div className="flex flex-row justify-between items-center mb-6">
+          <h1 className="text-2xl font-bold">Available Listings</h1>
+          {user?.role === "guesthouse" && (
+            <Button onClick={() => navigate("/guesthouse/create")}>
+              + Create New Listing
+            </Button>
+          )}
+        </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {guesthouses.map((gh) => (
             <GuesthouseCard
               key={gh.id}
+              id={gh.id || ""}
+              ownerId={gh.ownerId}
+              currentUserId={user?.uid || ""}
+              onDelete={handleDelete}
               name={gh.name}
-              island={gh.location}
+              island={gh.island}
               image={gh.image}
-              rating={gh.price}
-              pricePerNight={gh.price}
-              amenities={[]}
-              offpeakDiscount={0}
+              rating={gh.rating}
+              pricePerNight={gh.pricePerNight}
+              amenities={gh.amenities}
+              offpeakDiscount={gh.offpeakDiscount}
             />
           ))}
         </div>
