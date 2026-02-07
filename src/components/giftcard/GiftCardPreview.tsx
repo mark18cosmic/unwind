@@ -32,7 +32,7 @@ const GiftCardPreview = ({
         <div className="relative z-10">
           <div className="flex items-center gap-2 mb-3">
             <Gift className="w-5 h-5" />
-            <span className="text-sm font-medium opacity-90">OffPeak Rewards</span>
+            <span className="text-sm font-medium opacity-90">Unwind</span>
           </div>
           <h3 className="text-2xl font-bold mb-1">
             You've received a gift!

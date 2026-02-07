@@ -34,7 +34,7 @@ const Features = () => {
       <div className="container mx-auto max-w-6xl relative z-10">
         <div className="text-center mb-16 animate-fade-in">
           <span className="inline-block px-4 py-1.5 mb-4 text-sm font-medium text-primary bg-primary/10 rounded-full">
-            Why OffPeak Rewards
+            Why Unwind
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
             A smarter way to reward
