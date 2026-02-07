@@ -2,95 +2,138 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* OffPeak Rewards Design System
+   Island-inspired, warm, professional
+   All colors in HSL */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Core Ocean Palette */
+    --background: 40 33% 98%;
+    --foreground: 210 50% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 210 50% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 210 50% 15%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary: Deep Ocean Blue */
+    --primary: 200 80% 35%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary: Turquoise Lagoon */
+    --secondary: 175 60% 45%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted: Sandy Beige */
+    --muted: 35 30% 92%;
+    --muted-foreground: 210 20% 40%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Accent: Coral Sunset */
+    --accent: 15 85% 60%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 35 25% 88%;
+    --input: 35 25% 88%;
+    --ring: 200 80% 35%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 98%;
+    /* Extended Palette */
+    --ocean-deep: 210 70% 25%;
+    --ocean-mid: 200 75% 40%;
+    --ocean-light: 190 70% 85%;
+    --lagoon: 175 60% 45%;
+    --sand: 35 40% 90%;
+    --sand-dark: 30 25% 75%;
+    --coral: 15 85% 60%;
+    --sunset: 25 90% 55%;
+    --palm: 150 45% 35%;
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+    /* Gradients */
+    --gradient-ocean: linear-gradient(135deg, hsl(210 70% 25%) 0%, hsl(200 75% 40%) 50%, hsl(175 60% 45%) 100%);
+    --gradient-sunset: linear-gradient(135deg, hsl(25 90% 55%) 0%, hsl(15 85% 60%) 50%, hsl(350 70% 55%) 100%);
+    --gradient-sand: linear-gradient(180deg, hsl(40 33% 98%) 0%, hsl(35 40% 90%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(35 30% 97%) 100%);
 
-    --sidebar-primary: 240 5.9% 10%;
+    /* Shadows */
+    --shadow-soft: 0 4px 20px -4px hsl(210 50% 15% / 0.08);
+    --shadow-medium: 0 8px 30px -8px hsl(210 50% 15% / 0.12);
+    --shadow-ocean: 0 10px 40px -10px hsl(200 80% 35% / 0.25);
+    --shadow-card: 0 2px 12px -2px hsl(210 50% 15% / 0.06);
 
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Sidebar */
+    --sidebar-background: 40 33% 98%;
+    --sidebar-foreground: 210 50% 15%;
+    --sidebar-primary: 200 80% 35%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 35 30% 92%;
+    --sidebar-accent-foreground: 210 50% 15%;
+    --sidebar-border: 35 25% 88%;
+    --sidebar-ring: 200 80% 35%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 210 50% 8%;
+    --foreground: 35 30% 95%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 210 45% 12%;
+    --card-foreground: 35 30% 95%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 210 45% 12%;
+    --popover-foreground: 35 30% 95%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 190 70% 50%;
+    --primary-foreground: 210 50% 8%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 175 55% 40%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 210 40% 18%;
+    --muted-foreground: 35 20% 70%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 15 80% 55%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 70% 45%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 210 35% 20%;
+    --input: 210 35% 20%;
+    --ring: 190 70% 50%;
+
+    --ocean-deep: 210 60% 20%;
+    --ocean-mid: 200 65% 35%;
+    --ocean-light: 190 50% 25%;
+    --lagoon: 175 50% 35%;
+    --sand: 35 20% 20%;
+    --sand-dark: 30 15% 30%;
+    --coral: 15 75% 50%;
+    --sunset: 25 80% 50%;
+    --palm: 150 35% 30%;
+
+    --gradient-ocean: linear-gradient(135deg, hsl(210 60% 20%) 0%, hsl(200 65% 35%) 50%, hsl(175 50% 35%) 100%);
+    --gradient-sunset: linear-gradient(135deg, hsl(25 80% 50%) 0%, hsl(15 75% 50%) 50%, hsl(350 60% 45%) 100%);
+    --gradient-sand: linear-gradient(180deg, hsl(210 50% 8%) 0%, hsl(210 40% 12%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(210 45% 12%) 0%, hsl(210 40% 15%) 100%);
+
+    --shadow-soft: 0 4px 20px -4px hsl(0 0% 0% / 0.3);
+    --shadow-medium: 0 8px 30px -8px hsl(0 0% 0% / 0.4);
+    --shadow-ocean: 0 10px 40px -10px hsl(190 70% 50% / 0.2);
+    --shadow-card: 0 2px 12px -2px hsl(0 0% 0% / 0.2);
+
+    --sidebar-background: 210 45% 10%;
+    --sidebar-foreground: 35 30% 95%;
+    --sidebar-primary: 190 70% 50%;
+    --sidebar-primary-foreground: 210 50% 8%;
+    --sidebar-accent: 210 40% 18%;
+    --sidebar-accent-foreground: 35 30% 95%;
+    --sidebar-border: 210 35% 20%;
+    --sidebar-ring: 190 70% 50%;
   }
 }
 
@@ -100,6 +143,120 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply tracking-tight font-semibold;
+  }
+}
+
+@layer components {
+  .gradient-ocean {
+    background: var(--gradient-ocean);
+  }
+
+  .gradient-sunset {
+    background: var(--gradient-sunset);
+  }
+
+  .gradient-sand {
+    background: var(--gradient-sand);
+  }
+
+  .gradient-card {
+    background: var(--gradient-card);
+  }
+
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+
+  .shadow-medium {
+    box-shadow: var(--shadow-medium);
+  }
+
+  .shadow-ocean {
+    box-shadow: var(--shadow-ocean);
+  }
+
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+
+  .text-gradient-ocean {
+    background: var(--gradient-ocean);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-sunset {
+    background: var(--gradient-sunset);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Wave decoration */
+  .wave-divider {
+    position: relative;
+  }
+
+  .wave-divider::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 60'%3E%3Cpath fill='%23f8f6f3' d='M0,30 C360,60 720,0 1080,30 C1260,45 1350,45 1440,30 L1440,60 L0,60 Z'/%3E%3C/svg%3E") no-repeat bottom center;
+    background-size: cover;
+  }
+}
+
+@layer utilities {
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-float-delayed {
+    animation: float 6s ease-in-out 2s infinite;
+  }
+
+  .animate-shimmer {
+    animation: shimmer 2s linear infinite;
+  }
+
+  .animate-wave {
+    animation: wave 8s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  @keyframes wave {
+    0%, 100% {
+      transform: translateX(0) scaleY(1);
+    }
+    50% {
+      transform: translateX(-2%) scaleY(1.02);
+    }
   }
 }
