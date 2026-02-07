@@ -1,11 +1,13 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import GuesthouseCard from "@/components/guesthouse/GuesthouseCard";
 import { AuthContext } from "@/auth/AuthContext";
 import { Button } from "@/components/ui/button";
-import { Waves } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { db } from "@/services/firebase";
+import { signOut as firebaseSignOut } from "firebase/auth";
+import { auth } from "@/services/firebase";
 
 interface Guesthouse {
   id?: string;
@@ -24,56 +26,18 @@ const Home = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const [guesthouses, setGuesthouses] = useState<Guesthouse[]>([]);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Dummy guesthouse data
-  const dummyGuesthouses: Guesthouse[] = [
-    {
-      name: "Ocean Breeze Guesthouse",
-      island: "Maafushi",
-      image: "https://source.unsplash.com/400x300/?beach,hotel",
-      rating: 4.5,
-      pricePerNight: 120,
-      amenities: ["Beach Access", "WiFi", "Restaurant"],
-      offpeakDiscount: 15,
-      ownerId: user?.uid || "guesthouse_1",
-      createdAt: new Date(),
-    },
-    {
-      name: "Sunny Stay",
-      island: "Maafushi",
-      image: "https://source.unsplash.com/400x300/?resort,hotel",
-      rating: 4.2,
-      pricePerNight: 95,
-      amenities: ["WiFi", "Restaurant"],
-      offpeakDiscount: 10,
-      ownerId: user?.uid || "guesthouse_2",
-      createdAt: new Date(),
-    },
-    {
-      name: "Lagoon View Guesthouse",
-      island: "Maafushi",
-      image: "https://source.unsplash.com/400x300/?lagoon,hotel",
-      rating: 4.7,
-      pricePerNight: 150,
-      amenities: ["Beach Access", "WiFi"],
-      offpeakDiscount: 20,
-      ownerId: user?.uid || "guesthouse_3",
-      createdAt: new Date(),
-    },
-  ];
+  // Dummy guesthouses
+  
 
-  // Fetch guesthouses from Firestore and seed if empty
+  // Fetch guesthouses
   const fetchGuesthouses = async () => {
     try {
       const guesthouseCol = collection(db, "guesthouses");
       const snapshot = await getDocs(guesthouseCol);
 
-      if (snapshot.empty) {
-        console.log("No guesthouses found. Seeding dummy data...");
-        for (const gh of dummyGuesthouses) {
-          await addDoc(guesthouseCol, gh);
-        }
-      }
 
       const allDocs = await getDocs(guesthouseCol);
       const allGuesthouses = allDocs.docs.map((doc) => ({
@@ -90,7 +54,6 @@ const Home = () => {
     fetchGuesthouses();
   }, [user]);
 
-  // Delete guesthouse
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this listing?")) return;
     try {
@@ -101,16 +64,36 @@ const Home = () => {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      await firebaseSignOut(auth);
+      navigate("/login");
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
+  };
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Navbar */}
-      <nav className="flex items-center justify-between p-4 bg-white shadow-md">
+      <nav className="flex items-center justify-between p-4 bg-white shadow-md relative">
         <Link to="/" className="flex items-center gap-2">
-        <img src="/src/assets/Unwind.png" alt="logo" className="w-10 h-10" />
+          <img src="/src/assets/Unwind.png" alt="logo" className="w-10 h-10" />
           <span className="hidden md:block font-bold text-lg">Unwind</span>
         </Link>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 relative">
           {!user ? (
             <>
               <Link to="/login">
@@ -123,9 +106,45 @@ const Home = () => {
               </Link>
             </>
           ) : (
-            <span className="font-medium text-sm">
-              Welcome, {user.username}
-            </span>
+            <div ref={dropdownRef} className="relative">
+              <button
+                className="flex items-center gap-1 font-medium text-sm focus:outline-none"
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+              >
+                {user.username}
+                <ChevronDown className="w-4 h-4" />
+              </button>
+
+              {dropdownOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50">
+                  <Link
+                    to="/profile"
+                    className="block px-4 py-2 text-sm hover:bg-gray-100"
+                    onClick={() => setDropdownOpen(false)}
+                  >
+                    Profile
+                  </Link>
+                  {user.role === "guesthouse" && (
+                    <Link
+                      to="/guesthouse/create"
+                      className="block px-4 py-2 text-sm hover:bg-gray-100"
+                      onClick={() => setDropdownOpen(false)}
+                    >
+                      Create Listing
+                    </Link>
+                  )}
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      setDropdownOpen(false);
+                    }}
+                    className="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-gray-100"
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              )}
+            </div>
           )}
         </div>
       </nav>
