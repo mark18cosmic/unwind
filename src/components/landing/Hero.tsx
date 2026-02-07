@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Building2, Users } from "lucide-react";
 import heroImage from "@/assets/hero-maldives.jpg";
+import { Link } from "react-router-dom";
+
 
 const Hero = () => {
   return (
@@ -28,37 +30,59 @@ const Hero = () => {
           {/* Headline */}
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-6 leading-tight animate-fade-in-up">
             Turn off-season stays into{" "}
-            <span className="text-lagoon">unforgettable</span>{" "}
-            employee rewards
+            <span className="text-lagoon">unforgettable</span> employee rewards
           </h1>
 
           {/* Subheadline */}
-          <p className="text-lg md:text-xl text-primary-foreground/80 mb-8 leading-relaxed max-w-2xl animate-fade-in-up" style={{ animationDelay: "100ms" }}>
-            A B2B platform that lets companies purchase bulk Maldivian guesthouse stays 
-            as AI-generated digital gift cards — helping businesses reward employees 
-            while guesthouses fill empty rooms.
+          <p
+            className="text-lg md:text-xl text-primary-foreground/80 mb-8 leading-relaxed max-w-2xl animate-fade-in-up"
+            style={{ animationDelay: "100ms" }}
+          >
+            A B2B platform that lets companies purchase bulk Maldivian
+            guesthouse stays as AI-generated digital gift cards — helping
+            businesses reward employees while guesthouses fill empty rooms.
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 mb-12 animate-fade-in-up" style={{ animationDelay: "200ms" }}>
-            <Button variant="hero" size="xl">
-              Get Started
-            </Button>
+          <div
+            className="flex flex-col sm:flex-row gap-4 mb-12 animate-fade-in-up"
+            style={{ animationDelay: "200ms" }}
+          >
+            <Link to="/home">
+              <Button variant="hero" size="xl">
+                Get Started
+              </Button>
+            </Link>
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-3 gap-8 pt-8 border-t border-primary-foreground/20 animate-fade-in-up" style={{ animationDelay: "300ms" }}>
+          <div
+            className="grid grid-cols-3 gap-8 pt-8 border-t border-primary-foreground/20 animate-fade-in-up"
+            style={{ animationDelay: "300ms" }}
+          >
             <div>
-              <div className="text-3xl md:text-4xl font-bold text-primary-foreground">150+</div>
-              <div className="text-sm text-primary-foreground/60">Guesthouses</div>
+              <div className="text-3xl md:text-4xl font-bold text-primary-foreground">
+                150+
+              </div>
+              <div className="text-sm text-primary-foreground/60">
+                Guesthouses
+              </div>
             </div>
             <div>
-              <div className="text-3xl md:text-4xl font-bold text-primary-foreground">40%</div>
-              <div className="text-sm text-primary-foreground/60">Avg. Savings</div>
+              <div className="text-3xl md:text-4xl font-bold text-primary-foreground">
+                40%
+              </div>
+              <div className="text-sm text-primary-foreground/60">
+                Avg. Savings
+              </div>
             </div>
             <div>
-              <div className="text-3xl md:text-4xl font-bold text-primary-foreground">5K+</div>
-              <div className="text-sm text-primary-foreground/60">Gift Cards Sent</div>
+              <div className="text-3xl md:text-4xl font-bold text-primary-foreground">
+                5K+
+              </div>
+              <div className="text-sm text-primary-foreground/60">
+                Gift Cards Sent
+              </div>
             </div>
           </div>
         </div>
@@ -66,9 +90,14 @@ const Hero = () => {
 
       {/* Wave bottom */}
       <div className="absolute bottom-0 left-0 right-0 z-10">
-        <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
-          <path 
-            d="M0 50C240 80 480 20 720 50C960 80 1200 20 1440 50V100H0V50Z" 
+        <svg
+          viewBox="0 0 1440 100"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-full"
+        >
+          <path
+            d="M0 50C240 80 480 20 720 50C960 80 1200 20 1440 50V100H0V50Z"
             className="fill-background"
           />
         </svg>

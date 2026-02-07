@@ -30,8 +30,8 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
-          <img src="/src/assets/unwind.jpeg" alt="logo" className="w-10 h-10" />
-            <span className="font-bold text-lg">Unwind</span>
+          <img src="/src/assets/Unwind.png" alt="logo" className="w-10 h-10" />
+            <span className="font-bold text-lg hidden md:block">Unwind</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -77,7 +77,7 @@ const Navbar = () => {
               </>
             ) : (
               <div className="relative">
-                <div>
+                <div className="flex items-center gap-2">
                   <p>{user.username}</p>
                   <Avatar onClick={() => setDropdownOpen(!dropdownOpen)}>
                     <AvatarImage

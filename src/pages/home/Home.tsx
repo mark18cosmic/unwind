@@ -52,9 +52,8 @@ const Home = () => {
       {/* Simplified Navbar */}
       <nav className="flex items-center justify-between p-4 bg-white shadow-md">
         <Link to="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg gradient-ocean flex items-center justify-center">
-            <Waves className="w-5 h-5 text-white" />
-          </div>
+        <img src="/src/assets/Unwind.png" alt="logo" className="w-10 h-10" />
+
           <span className="font-bold text-lg">Unwind</span>
         </Link>
 
