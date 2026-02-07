@@ -16,7 +16,7 @@ const Navbar = () => {
               <Waves className="w-5 h-5 text-white" />
             </div>
             <span className="font-bold text-lg">
-              OffPeak<span className="text-primary">Rewards</span>
+              Unwind
             </span>
           </Link>
 
