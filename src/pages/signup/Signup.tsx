@@ -6,6 +6,7 @@ import { auth, db } from "../../services/firebase";
 import { UserRole } from "../../types/user";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import Unwind from "@/assets/Unwind.png"
 
 export default function Signup() {
   const [email, setEmail] = useState("");
@@ -44,7 +45,7 @@ export default function Signup() {
         <Link to={"/"}>
         <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 z-10">
           <img
-            src="/src/assets/Unwind.png"
+            src={Unwind}
             alt="Unwind Logo"
             className="w-20 h-20 rounded-full shadow-lg"
           />
