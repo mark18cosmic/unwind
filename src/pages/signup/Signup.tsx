@@ -31,7 +31,7 @@ export default function Signup() {
         photoURL: null,
       });
 
-      navigate("/dashboard");
+      navigate("/home");
     } catch (err: any) {
       setError(err.message);
     }

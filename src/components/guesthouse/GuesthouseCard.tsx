@@ -42,10 +42,10 @@ const GuesthouseCard = ({
       {isOwner && onDelete && (
         <button
           onClick={() => onDelete(id)}
-          className="absolute top-2 right-2 bg-white rounded-full p-1 shadow hover:bg-red-50 z-50"
+          className="absolute top-2 left-2 bg-white rounded-full p-1 shadow hover:bg-red-50 z-50"
           title="Delete Listing"
         >
-          <Trash className="w-4 h-4 text-red-500" />
+          <Trash className="w-6 h-6 text-red-500" />
         </button>
       )}
 

@@ -90,10 +90,10 @@ const Navbar = () => {
                 {dropdownOpen && (
                   <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow-lg flex flex-col">
                     <button
-                      onClick={() => navigate("/dashboard")}
+                      onClick={() => navigate("/home")}
                       className="px-4 py-2 text-sm hover:bg-gray-100 text-left"
                     >
-                      Dashboard
+                      Home
                     </button>
                     <button
                       onClick={handleLogout}
