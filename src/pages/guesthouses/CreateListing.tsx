@@ -10,11 +10,15 @@ import { Star } from "lucide-react";
 
 const availableAmenities = [
   "WiFi",
-  "Pool",
-  "Beach Access",
-  "Restaurant",
-  "Air Conditioning",
-  "Breakfast Included",
+    "Air Conditioning",
+    "Swimming Pool",
+    "Free Parking",
+    "Breakfast Included",
+    "Gym",
+    "Laundry Service",
+    "Ocean View",
+    "Kitchen",
+    "24/7 Front Desk"
 ];
 
 const CreateListing = () => {
