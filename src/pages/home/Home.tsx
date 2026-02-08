@@ -8,6 +8,7 @@ import { collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore"
 import { db } from "@/services/firebase";
 import { signOut as firebaseSignOut } from "firebase/auth";
 import { auth } from "@/services/firebase";
+import Unwind from "@/assets/Unwind.png"
 
 interface Guesthouse {
   id?: string;
@@ -89,7 +90,7 @@ const Home = () => {
       {/* Navbar */}
       <nav className="flex items-center justify-between p-4 bg-white shadow-md relative">
         <Link to="/" className="flex items-center gap-2">
-          <img src="/src/assets/Unwind.png" alt="logo" className="w-10 h-10" />
+          <img src={Unwind} alt="Unwind" className="w-10 h-10" />
           <span className="hidden md:block font-bold text-lg">Unwind</span>
         </Link>
 

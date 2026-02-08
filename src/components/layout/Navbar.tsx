@@ -6,6 +6,7 @@ import { AuthContext } from "@/auth/AuthContext";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { signOut } from "firebase/auth";
 import { auth } from "@/services/firebase";
+import Unwind from '@/assets/Unwind.png';
 
 
 const Navbar = () => {
@@ -30,7 +31,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
-          <img src="/src/assets/Unwind.png" alt="logo" className="w-10 h-10" />
+          <img src={Unwind} alt="Unwind" className="w-10 h-10"/>
             <span className="font-bold text-lg hidden md:block">Unwind</span>
           </Link>
 
@@ -159,10 +160,10 @@ const Navbar = () => {
                 ) : (
                   <>
                     <button
-                      onClick={() => navigate("/dashboard")}
+                      onClick={() => navigate("/home")}
                       className="flex-1 border p-2 rounded"
                     >
-                      Dashboard
+                      Home
                     </button>
                     <button
                       onClick={handleLogout}
